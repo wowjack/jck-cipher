@@ -1,4 +1,5 @@
 use generate_keys::generate_keys;
+use rand::SeedableRng;
 use round::{encryption_round, decryption_round};
 
 mod mangler; //mangler function used in each encryption round
@@ -28,10 +29,12 @@ pub fn encrypt(input: &str, key: u128, rounds: u32) -> String {
     return output_buffer.concat();
 }
 
-fn encrypt_block(input: &[u8], round_keys: &Vec<u128>) -> String {
+fn encrypt_block(input: &[u8], round_keys: &Vec<[u8; 32]>) -> String {
     let mut block_string = String::from_utf8(input.to_vec()).unwrap();
-    for key in round_keys {
-        encryption_round(&mut block_string, *key)
+    for (i, key) in round_keys.iter().enumerate() {
+        let round_rng = rand::rngs::StdRng::from_seed(*key);
+        encryption_round(&mut block_string, round_rng);
+        println!("encryption round {i} finished");
     }
     return block_string;
 }
@@ -55,10 +58,11 @@ pub fn decrypt(input: &str, key: u128, rounds: u32) -> String {
     return output;
 }
 
-fn decrypt_block(input: &[u8], round_keys: &Vec<u128>) -> String {
+fn decrypt_block(input: &[u8], round_keys: &Vec<[u8; 32]>) -> String {
     let mut block_string = String::from_utf8(input.to_vec()).unwrap();
     for key in round_keys {
-        decryption_round(&mut block_string, *key);
+        let round_rng = rand::rngs::StdRng::from_seed(*key);
+        decryption_round(&mut block_string, round_rng);
     }
     return block_string
 }
