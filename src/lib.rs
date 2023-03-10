@@ -10,7 +10,7 @@ pub fn encrypt(input: &str, key: u128, block_size: u32, rounds: u32) -> &str {
     //generate list of round keys
     let round_keys = generate_keys(key, rounds);
 
-    
+    //apply padding
 
     //pass input through round function however many times specified by rounds
 
@@ -19,6 +19,12 @@ pub fn encrypt(input: &str, key: u128, block_size: u32, rounds: u32) -> &str {
 }
 
 pub fn decrypt(input: &str, key: u128, block_size: u32, rounds: u32) -> &str {
+    //generate list of round keys
+    let round_keys = generate_keys(key, rounds);
+
+    //decrypt
+
+    //remove padding
 
     return input;
 }
@@ -33,14 +39,9 @@ mod tests {
     const DEFAULT_ROUNDS: u32 = 16;
 
     #[test]
-    fn test_encrypt() {
-        let result = encrypt(DEFAULT_STRING, DEFAULT_KEY, DEFAULT_BLOCK_SIZE, DEFAULT_ROUNDS);
-        assert_eq!(result, DEFAULT_STRING);
-    }
-
-    #[test]
-    fn test_decrypt() {
-        let result = decrypt(DEFAULT_STRING, DEFAULT_KEY, DEFAULT_BLOCK_SIZE, DEFAULT_ROUNDS);
-        assert_eq!(result, DEFAULT_STRING);
+    fn test() {
+        let cipher_text = encrypt(DEFAULT_STRING, DEFAULT_KEY, DEFAULT_BLOCK_SIZE, DEFAULT_ROUNDS);
+        let plain_text = decrypt(cipher_text, DEFAULT_KEY, DEFAULT_BLOCK_SIZE, DEFAULT_ROUNDS);
+        assert_eq!(cipher_text, plain_text);
     }
 }
