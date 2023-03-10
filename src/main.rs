@@ -2,9 +2,9 @@
 use jck_cipher::*;
 
 fn main() {
-    let plain_text = "Hello";
+    let plain_text = "acbcdefghijklmnopqrstuvqxyz".repeat(7);
     let key = u128::from_be_bytes([12, 34, 52, 78, 90, 66, 123, 94, 53, 86, 243, 12, 43, 26, 93, 154]);
-    let rounds = 1000;
+    let rounds = 16;
 
     println!("Plain text:\n\"{}\"\n", plain_text);
 
