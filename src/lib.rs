@@ -1,3 +1,5 @@
+use generate_keys::generate_keys;
+
 mod mangler; //mangler function used in each encryption round
 mod generate_keys; //generates round keys used by the mangler function
 mod round; //function to be used for each round of encryption
@@ -5,7 +7,14 @@ mod ebox; //expansion box used by mangler function
 mod sbox; //substitute and shrink box used by mangler function
 
 pub fn encrypt(input: &str, key: u128, block_size: u32, rounds: u32) -> &str {
+    //generate list of round keys
+    let round_keys = generate_keys(key, rounds);
+
     
+
+    //pass input through round function however many times specified by rounds
+
+
     return input;
 }
 
