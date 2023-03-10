@@ -1,5 +1,5 @@
 
-//each key will repeat after 128 rounds
+//round keys will repeat every 256 rounds
 pub(crate) fn generate_keys(main_key: u128, rounds: u32) -> Vec<u128> {
     let mut round_keys = vec![];
     
@@ -19,6 +19,10 @@ pub(crate) fn generate_keys(main_key: u128, rounds: u32) -> Vec<u128> {
 }
 
 fn do_rotates(chunks: &mut [&mut [u8]; 4], round_num: u32) {
+    if round_num % 128 == 0 {
+        chunks.reverse();
+    }
+
     if round_num % 32 == 0 {
         chunks.rotate_left(1);
     }

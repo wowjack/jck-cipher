@@ -1,5 +1,8 @@
 
-pub(crate) fn encryption_round(input: &str, round_key: u64) -> &str {
+pub(crate) fn encryption_round(input: &mut String, round_key: u128) {
+    
+}
 
-    return input;
+pub(crate) fn decryption_round(input: &mut String, round_key: u128) {
+
 }
