@@ -8,9 +8,10 @@ mod round; //function to be used for each round of encryption
 const BLOCK_SIZE: u8 = 16; //16 bytes / 128 bits per block
 
 
-pub fn encrypt(input: &str, key: u128, rounds: u32) -> String {
+pub fn encrypt(input: &str, key: u128, rounds: usize) -> String {
     //generate list of round keys
     let round_keys = generate_keys(key, rounds);
+
 
     //apply padding
     let mut input_bytes = Vec::from(input.as_bytes());
@@ -37,7 +38,7 @@ fn encrypt_block(input: &[u8], round_keys: &Vec<[u8; 32]>) -> String {
 }
 
 
-pub fn decrypt(input: &str, key: u128, rounds: u32) -> String {
+pub fn decrypt(input: &str, key: u128, rounds: usize) -> String {
     //generate list of round keys
     let mut round_keys = generate_keys(key, rounds);
     round_keys.reverse();
@@ -70,7 +71,7 @@ mod tests {
 
     const DEFAULT_STRING: &str = "string";
     const DEFAULT_KEY: u128 = 123456789101112;
-    const DEFAULT_ROUNDS: u32 = 32;
+    const DEFAULT_ROUNDS: usize = 32;
 
     #[test]
     fn test1() {
